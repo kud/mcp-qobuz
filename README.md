@@ -13,12 +13,12 @@
 
 ## Features
 
-- **Eleven tools out of the box** — search tracks, albums, artists, and playlists; fetch detail pages; list your favourites; and manage playlists, all from any MCP client.
-- **Two auth paths** — macOS Keychain via `createKeychainStore()` (shared with `qobuz-cli` and the Raycast extension) or `QOBUZ_TOKEN` + `QOBUZ_APP_ID` env vars for headless and remote use; env vars take precedence when present.
-- **Safety-gated writes** — `create-playlist`, `add-to-playlist`, and `update-playlist-description` require `confirm: true` to prevent accidental mutations.
-- **Now-playing from the desktop app** — reads `~/Library/Application Support/Qobuz/player-0.json` written by the Qobuz desktop app; returns a graceful error when the file is absent or on non-macOS platforms.
-- **Deep links on every result** — every tool response includes an `open.qobuz.com` URL so results are one click away from the player.
-- **Powered by @kud/qobuz** — built on the same `@kud/qobuz` core library used across the kud music toolchain.
+- **AI-native Qobuz access** — exposes Qobuz to any MCP client (Claude Desktop, Claude Code) as tools.
+- **Search & lookup** — search albums, artists, and tracks; fetch full details for any track, album, artist, or playlist by ID.
+- **Browse your library** — list your favourited tracks, albums, and artists, and all your playlists.
+- **Now playing** — read the current track from the Qobuz desktop app (macOS only — the server must run on the same Mac).
+- **Flexible auth** — Keychain locally, or `QOBUZ_TOKEN` / `QOBUZ_APP_ID` env vars for headless and remote MCP hosts.
+- **Guarded writes** — create playlists, add tracks, and update descriptions, gated behind an explicit `confirm` flag.
 
 ## Install
 
@@ -26,33 +26,32 @@
 npm install -g @kud/mcp-qobuz
 ```
 
-## Configuration
+## Usage
 
-### Keychain auth (local Mac — shared credentials with qobuz-cli)
-
-Add to your `.mcp.json`:
+Add the server to your `.mcp.json`:
 
 ```json
 {
   "mcpServers": {
-    "mcp-qobuz": {
-      "command": "npx",
-      "args": ["tsx", "/path/to/mcp-qobuz/src/index.ts"]
-    }
+    "mcp-qobuz": { "command": "npx", "args": ["-y", "@kud/mcp-qobuz"] }
   }
 }
 ```
 
-Credentials are read automatically from the macOS Keychain. Log in once with `qobuz-cli` or the Raycast extension and this server picks them up.
+### Auth — local macOS (Keychain)
 
-### Env var auth (headless / remote)
+Credentials are read automatically from the macOS Keychain using the same `"qobuz"/"default"` entry written by `qobuz-cli`. Log in once with `qobuz login` and this server picks them up — no extra configuration needed.
+
+### Auth — headless / remote (env vars)
+
+For CI, remote MCP hosts, or any non-Mac environment, pass credentials via the `env` block in `.mcp.json`:
 
 ```json
 {
   "mcpServers": {
     "mcp-qobuz": {
       "command": "npx",
-      "args": ["tsx", "/path/to/mcp-qobuz/src/index.ts"],
+      "args": ["-y", "@kud/mcp-qobuz"],
       "env": {
         "QOBUZ_TOKEN": "your-token",
         "QOBUZ_APP_ID": "your-app-id"
@@ -64,21 +63,23 @@ Credentials are read automatically from the macOS Keychain. Log in once with `qo
 
 Env vars take precedence over the Keychain when both are present.
 
-## Tools
+> **Note:** the `now-playing` tool is macOS-only — it reads the player state file written by the Qobuz desktop app. It will return an error on any other platform.
 
-| Tool                          | Description                                                       |
-| ----------------------------- | ----------------------------------------------------------------- |
-| `search`                      | Search Qobuz for tracks, albums, artists, or playlists            |
-| `get-track`                   | Fetch full track details by ID                                    |
-| `get-album`                   | Fetch full album details by ID                                    |
-| `get-artist`                  | Fetch artist biography and discography by ID                      |
-| `get-playlist`                | Fetch a playlist and its tracks by ID                             |
-| `list-playlists`              | List your Qobuz playlists                                         |
-| `list-favourites`             | List your favourited tracks, albums, and artists                  |
-| `now-playing`                 | Show what the Qobuz desktop app is currently playing (macOS only) |
-| `create-playlist`             | Create a new playlist — requires `confirm: true`                  |
-| `add-to-playlist`             | Add a track to a playlist — requires `confirm: true`              |
-| `update-playlist-description` | Update a playlist's description — requires `confirm: true`        |
+### Tools
+
+| Tool                          | Description                                                |
+| ----------------------------- | ---------------------------------------------------------- |
+| `search`                      | Search Qobuz for albums, artists, and/or tracks            |
+| `get-track`                   | Fetch full track details by ID                             |
+| `get-album`                   | Fetch full album details by ID                             |
+| `get-artist`                  | Fetch artist biography and discography by ID               |
+| `get-playlist`                | Fetch a playlist and its tracks by ID                      |
+| `list-playlists`              | List your Qobuz playlists                                  |
+| `list-favourites`             | List your favourited tracks, albums, or artists            |
+| `now-playing`                 | Show what the Qobuz desktop app is playing (macOS only)    |
+| `create-playlist`             | Create a new playlist — requires `confirm: true`           |
+| `add-to-playlist`             | Add tracks to a playlist — requires `confirm: true`        |
+| `update-playlist-description` | Update a playlist's description — requires `confirm: true` |
 
 ## Development
 

@@ -42,7 +42,7 @@
   "bugs": {
     "url": "https://github.com/kud/mcp-qobuz/issues"
   },
-  "homepage": "https://github.com/kud/mcp-qobuz#readme",
+  "homepage": "https://kud.io/projects/mcp-qobuz",
   "engines": {
     "node": ">=20.0.0"
   },

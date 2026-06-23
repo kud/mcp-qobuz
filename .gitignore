@@ -3,3 +3,5 @@ dist/
 *.js.map
 coverage/
 .DS_Store
+.env
+.env*

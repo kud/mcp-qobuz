@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mcp-qobuz — MCP server for Qobuz</title>
+    <meta
+      name="description"
+      content="MCP server for Qobuz — search, browse, and explore your music library via AI."
+    />
+    <meta property="og:title" content="mcp-qobuz" />
+    <meta
+      property="og:description"
+      content="MCP server for Qobuz — search, browse, and explore your music library via AI."
+    />
+    <meta property="og:url" content="https://kud.io/projects/mcp-qobuz" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- ─── Nav ─── -->
+    <nav id="nav">
+      <a href="#" class="nav-brand">
+        <span class="nav-brand-icon">🎵</span>
+        mcp-qobuz
+      </a>
+      <div class="nav-links">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#quickstart" class="nav-link">Quick Start</a>
+        <a href="#tools" class="nav-link">Tools</a>
+        <a
+          href="https://github.com/kud/mcp-qobuz"
+          class="nav-link nav-link-primary"
+          target="_blank"
+          rel="noopener"
+          >GitHub</a
+        >
+      </div>
+    </nav>
+
+    <!-- ─── Hero ─── -->
+    <div class="hero">
+      <div class="hero-emoji-icon">🎵</div>
+
+      <div class="hero-badge">MCP Server &middot; TypeScript</div>
+
+      <h1>Your Qobuz library,<br /><span>inside your AI</span></h1>
+
+      <p class="hero-desc">
+        Search, browse, and explore your Qobuz music library directly from any
+        MCP-compatible AI client. Eleven tools, two auth paths, safety-gated
+        writes.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#quickstart" class="btn-primary">Get started</a>
+        <a
+          href="https://github.com/kud/mcp-qobuz"
+          class="btn-secondary"
+          target="_blank"
+          rel="noopener"
+          >View on GitHub</a
+        >
+      </div>
+
+      <div class="hero-command">
+        <code>npx -y @kud/mcp-qobuz</code>
+        <button class="copy-btn" data-copy="npx -y @kud/mcp-qobuz">Copy</button>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-value">1.0.0</span>
+          <span class="hero-stat-label">Version</span>
+        </div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">11</span>
+          <span class="hero-stat-label">Tools</span>
+        </div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">MIT</span>
+          <span class="hero-stat-label">Licence</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Features ─── -->
+    <section id="features">
+      <p class="section-label reveal">Features</p>
+      <h2 class="section-title reveal">Everything you need to query Qobuz</h2>
+      <p class="section-desc reveal">
+        From instant search to playlist management, mcp-qobuz gives your AI
+        client first-class access to the Qobuz catalogue and your personal
+        library.
+      </p>
+
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon">🔍</div>
+          <h3 class="feature-title">Eleven tools out of the box</h3>
+          <p class="feature-desc">
+            Search tracks, albums, artists, and playlists; fetch detail pages;
+            list your favourites; and manage playlists — all from any MCP
+            client.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">🔐</div>
+          <h3 class="feature-title">Two auth paths</h3>
+          <p class="feature-desc">
+            macOS Keychain via
+            <code
+              style="
+                font-family: var(--mono);
+                font-size: 13px;
+                color: var(--primary-light);
+              "
+              >createKeychainStore()</code
+            >
+            — shared with qobuz-cli and the Raycast extension — or
+            <code
+              style="
+                font-family: var(--mono);
+                font-size: 13px;
+                color: var(--primary-light);
+              "
+              >QOBUZ_TOKEN</code
+            >
+            +
+            <code
+              style="
+                font-family: var(--mono);
+                font-size: 13px;
+                color: var(--primary-light);
+              "
+              >QOBUZ_APP_ID</code
+            >
+            env vars for headless use.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">🛡️</div>
+          <h3 class="feature-title">Safety-gated writes</h3>
+          <p class="feature-desc">
+            <code
+              style="
+                font-family: var(--mono);
+                font-size: 13px;
+                color: var(--primary-light);
+              "
+              >create-playlist</code
+            >,
+            <code
+              style="
+                font-family: var(--mono);
+                font-size: 13px;
+                color: var(--primary-light);
+              "
+              >add-to-playlist</code
+            >, and
+            <code
+              style="
+                font-family: var(--mono);
+                font-size: 13px;
+                color: var(--primary-light);
+              "
+              >update-playlist-description</code
+            >
+            require
+            <code
+              style="
+                font-family: var(--mono);
+                font-size: 13px;
+                color: var(--primary-light);
+              "
+              >confirm: true</code
+            >
+            to prevent accidental mutations to your library.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">🎧</div>
+          <h3 class="feature-title">Now-playing from the desktop app</h3>
+          <p class="feature-desc">
+            Reads the Qobuz desktop app's local player state file on macOS. Ask
+            your AI what's playing and get a full track object with a deep link
+            back to the player.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">🔗</div>
+          <h3 class="feature-title">Deep links on every result</h3>
+          <p class="feature-desc">
+            Every tool response includes an
+            <code
+              style="
+                font-family: var(--mono);
+                font-size: 13px;
+                color: var(--primary-light);
+              "
+              >open.qobuz.com</code
+            >
+            URL so results are one click away from the player — no copy-pasting
+            IDs.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">📦</div>
+          <h3 class="feature-title">Powered by @kud/qobuz</h3>
+          <p class="feature-desc">
+            Built on the same
+            <code
+              style="
+                font-family: var(--mono);
+                font-size: 13px;
+                color: var(--primary-light);
+              "
+              >@kud/qobuz</code
+            >
+            core library used across the kud music toolchain — qobuz-cli, the
+            Raycast extension, and this server all share one authenticated
+            client.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Quick Start ─── -->
+    <section id="quickstart">
+      <p class="section-label reveal">Quick Start</p>
+      <h2 class="section-title reveal">Up and running in minutes</h2>
+      <p class="section-desc reveal">
+        Add mcp-qobuz to your MCP client config. No build step — runs directly
+        via
+        <code
+          style="
+            font-family: var(--mono);
+            font-size: 14px;
+            color: var(--primary-light);
+          "
+          >npx</code
+        >.
+      </p>
+
+      <!-- Step 1 + 2 side by side -->
+      <div class="quickstart-grid">
+        <div class="quickstart-step reveal">
+          <div class="step-label">
+            <span class="step-num">1</span>
+            Keychain auth (macOS — shared credentials)
+          </div>
+          <div class="code-block">
+            <button
+              class="copy-btn"
+              data-copy='{"mcpServers":{"mcp-qobuz":{"command":"npx","args":["-y","@kud/mcp-qobuz"]}}}'
+            >
+              Copy
+            </button>
+            <pre><span class="comment">// .mcp.json</span>
+{
+  <span class="prop">"mcpServers"</span>: {
+    <span class="prop">"mcp-qobuz"</span>: {
+      <span class="prop">"command"</span>: <span class="string">"npx"</span>,
+      <span class="prop">"args"</span>: [<span class="string">"-y"</span>, <span class="string">"@kud/mcp-qobuz"</span>]
+    }
+  }
+}</pre>
+          </div>
+          <p
+            style="font-size: 13px; color: var(--text-muted); line-height: 1.55"
+          >
+            Credentials are read automatically from the macOS Keychain. Log in
+            once with
+            <code
+              style="
+                font-family: var(--mono);
+                font-size: 12px;
+                color: var(--primary-light);
+              "
+              >qobuz-cli</code
+            >
+            or the Raycast extension and this server picks them up.
+          </p>
+        </div>
+
+        <div class="quickstart-step reveal">
+          <div class="step-label">
+            <span class="step-num">2</span>
+            Env var auth (headless / remote)
+          </div>
+          <div class="code-block">
+            <button
+              class="copy-btn"
+              data-copy='{"mcpServers":{"mcp-qobuz":{"command":"npx","args":["-y","@kud/mcp-qobuz"],"env":{"QOBUZ_TOKEN":"your-token","QOBUZ_APP_ID":"your-app-id"}}}}'
+            >
+              Copy
+            </button>
+            <pre><span class="comment">// .mcp.json</span>
+{
+  <span class="prop">"mcpServers"</span>: {
+    <span class="prop">"mcp-qobuz"</span>: {
+      <span class="prop">"command"</span>: <span class="string">"npx"</span>,
+      <span class="prop">"args"</span>: [<span class="string">"-y"</span>, <span class="string">"@kud/mcp-qobuz"</span>],
+      <span class="prop">"env"</span>: {
+        <span class="prop">"QOBUZ_TOKEN"</span>: <span class="string">"your-token"</span>,
+        <span class="prop">"QOBUZ_APP_ID"</span>: <span class="string">"your-app-id"</span>
+      }
+    }
+  }
+}</pre>
+          </div>
+          <p
+            style="font-size: 13px; color: var(--text-muted); line-height: 1.55"
+          >
+            Env vars take precedence over the Keychain when both are present.
+            Useful for CI, remote servers, or non-macOS hosts.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Tools Reference ─── -->
+    <section id="tools">
+      <p class="section-label reveal">Tool Reference</p>
+      <h2 class="section-title reveal">Eleven tools, two modes</h2>
+      <p class="section-desc reveal">
+        Read tools work immediately after auth. Write tools require
+        <code
+          style="
+            font-family: var(--mono);
+            font-size: 14px;
+            color: var(--primary-light);
+          "
+          >confirm: true</code
+        >
+        — a deliberate speed bump before mutating your library.
+      </p>
+
+      <div class="cli-list reveal">
+        <div class="cli-row">
+          <span class="cli-cmd">search</span>
+          <span class="cli-desc"
+            >Search Qobuz for albums, artists, and/or tracks. Returns results
+            with Qobuz deep links. Filter by type: albums, artists, tracks, or
+            all.</span
+          >
+          <span class="cli-badge cli-badge-read">Read</span>
+        </div>
+
+        <div class="cli-row">
+          <span class="cli-cmd">get-track</span>
+          <span class="cli-desc"
+            >Fetch full track details by numeric ID, including deep link back to
+            the Qobuz player.</span
+          >
+          <span class="cli-badge cli-badge-read">Read</span>
+        </div>
+
+        <div class="cli-row">
+          <span class="cli-cmd">get-album</span>
+          <span class="cli-desc"
+            >Fetch full album details by string ID (e.g.
+            <code style="font-family: var(--mono); font-size: 12px"
+              >'0060253786997'</code
+            >), including tracklist and deep link.</span
+          >
+          <span class="cli-badge cli-badge-read">Read</span>
+        </div>
+
+        <div class="cli-row">
+          <span class="cli-cmd">get-artist</span>
+          <span class="cli-desc"
+            >Fetch artist biography and discography by numeric ID, including
+            deep link.</span
+          >
+          <span class="cli-badge cli-badge-read">Read</span>
+        </div>
+
+        <div class="cli-row">
+          <span class="cli-cmd">get-playlist</span>
+          <span class="cli-desc"
+            >Fetch a playlist and its full track listing by numeric ID.</span
+          >
+          <span class="cli-badge cli-badge-read">Read</span>
+        </div>
+
+        <div class="cli-row">
+          <span class="cli-cmd">list-playlists</span>
+          <span class="cli-desc"
+            >List the authenticated user's Qobuz playlists. Returns up to 50 by
+            default (configurable up to 500).</span
+          >
+          <span class="cli-badge cli-badge-read">Read</span>
+        </div>
+
+        <div class="cli-row">
+          <span class="cli-cmd">list-favourites</span>
+          <span class="cli-desc"
+            >List your favourited albums, artists, or tracks. Pass
+            <code style="font-family: var(--mono); font-size: 12px">type</code>
+            to select which collection to browse.</span
+          >
+          <span class="cli-badge cli-badge-read">Read</span>
+        </div>
+
+        <div class="cli-row">
+          <span class="cli-cmd">now-playing</span>
+          <span class="cli-desc"
+            >Show the track currently playing in the Qobuz desktop app. Reads
+            the local player state file written by the desktop app.</span
+          >
+          <span class="cli-badge cli-badge-macos">macOS only</span>
+        </div>
+
+        <div class="cli-row write-tool">
+          <span class="cli-cmd">create-playlist</span>
+          <span class="cli-desc"
+            >Create a new Qobuz playlist with optional description and
+            visibility. Requires
+            <code style="font-family: var(--mono); font-size: 12px"
+              >confirm: true</code
+            >.</span
+          >
+          <span class="cli-badge cli-badge-write">Write</span>
+        </div>
+
+        <div class="cli-row write-tool">
+          <span class="cli-cmd">add-to-playlist</span>
+          <span class="cli-desc"
+            >Add one or more tracks to an existing playlist by ID. Requires
+            <code style="font-family: var(--mono); font-size: 12px"
+              >confirm: true</code
+            >.</span
+          >
+          <span class="cli-badge cli-badge-write">Write</span>
+        </div>
+
+        <div class="cli-row write-tool">
+          <span class="cli-cmd">update-playlist-description</span>
+          <span class="cli-desc"
+            >Update a playlist's description text. Requires
+            <code style="font-family: var(--mono); font-size: 12px"
+              >confirm: true</code
+            >.</span
+          >
+          <span class="cli-badge cli-badge-write">Write</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Footer ─── -->
+    <footer>
+      <div class="footer-inner">
+        <div>
+          <a href="#" class="footer-brand">
+            <span class="footer-brand-icon">🎵</span>
+            @kud/mcp-qobuz
+          </a>
+          <p class="footer-copy">MIT licence &middot; v1.0.0</p>
+        </div>
+        <div class="footer-links">
+          <a
+            href="https://github.com/kud/mcp-qobuz"
+            class="footer-link"
+            target="_blank"
+            rel="noopener"
+            >GitHub</a
+          >
+          <a
+            href="https://www.npmjs.com/package/@kud/mcp-qobuz"
+            class="footer-link"
+            target="_blank"
+            rel="noopener"
+            >npm</a
+          >
+          <a
+            href="https://github.com/kud/mcp-qobuz/releases"
+            class="footer-link"
+            target="_blank"
+            rel="noopener"
+            >Changelog</a
+          >
+          <a
+            href="https://github.com/kud/mcp-qobuz/issues"
+            class="footer-link"
+            target="_blank"
+            rel="noopener"
+            >Issues</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Nav scroll effect
+      const nav = document.getElementById("nav")
+      window.addEventListener("scroll", () => {
+        nav.classList.toggle("scrolled", window.scrollY > 20)
+      })
+
+      // Copy buttons
+      document.querySelectorAll(".copy-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const text = btn.dataset.copy
+          navigator.clipboard.writeText(text).then(() => {
+            const original = btn.textContent
+            btn.textContent = "Copied!"
+            setTimeout(() => {
+              btn.textContent = original
+            }, 1800)
+          })
+        })
+      })
+
+      // Scroll reveal
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible")
+              observer.unobserve(entry.target)
+            }
+          })
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+      )
+
+      document.querySelectorAll(".reveal").forEach((el) => observer.observe(el))
+    </script>
+  </body>
+</html>
